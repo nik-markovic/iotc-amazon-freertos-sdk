@@ -109,7 +109,7 @@ static void publish_telemetry() {
     iotcl_destroy_serialized(str);
 }
 
-int app_main(void) {
+int iotconnect_app_main(void) {
 
     IotConnectClientConfig *config = iotconnect_sdk_init_and_get_config();
     config->cpid = IOTCONNECT_CPID;
