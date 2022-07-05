@@ -3,6 +3,7 @@
 // Created by Nik Markovic <nikola.markovic@avnet.com> on 6/15/22.
 //
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -82,7 +83,7 @@ static IotclDiscoveryResponse* run_http_discovery(const char* cpid, const char* 
     req.resource = resource_str_buff;
     req.tls_cert = CERT_GODADDY_INT_SECURE_G2;
 
-    UINT status = iotconnect_https_request(&req);
+    int status = iotconnect_https_request(&req);
 
     if (status != EXIT_SUCCESS) {
         printf("Discovery: iotconnect_https_request() error code: %x data: %s\r\n", status, req.response);
@@ -133,7 +134,7 @@ static IotclSyncResponse* run_http_sync(const char* cpid, const char* uniqueid) 
     req.payload = post_data;
     req.tls_cert = CERT_GODADDY_INT_SECURE_G2;
 
-    UINT status = iotconnect_https_request(&req);
+    int status = iotconnect_https_request(&req);
     free(sync_path);
 
     if (status != EXIT_SUCCESS) {
@@ -169,24 +170,41 @@ static IotclSyncResponse* run_http_sync(const char* cpid, const char* uniqueid) 
     return ret;
 
 }
-const char* get_username() {
+
+const char* iotc_sync_get_iothub_host() {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
+    return sync_response->broker.host;
+}
+
+const char* iotc_sync_get_username() {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
     return sync_response->broker.user_name;
 }
 
-const char* get_client_id() {
+const char* iotc_sync_get_client_id() {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
     return sync_response->broker.client_id;
 }
 
 const char* iotc_sync_get_pub_topic(void) {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
     return sync_response->broker.pub_topic;
 }
 
 const char* iotc_sync_get_sub_topic(void) {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
     return sync_response->broker.sub_topic;
 }
 
 
 const char* iotc_sync_get_dtg(void) {
+    if (!sync_response)  iotc_sync_obtain_response();
+    if (!sync_response)  return NULL;
     return sync_response->dtg;
 }
 
@@ -200,14 +218,14 @@ int iotc_sync_obtain_response(void) {
     discovery_response = run_http_discovery(IOTCONNECT_CPID, IOTCONNECT_ENV);
     if (NULL == discovery_response) {
         // get_base_url will print the error
-        return;
+        return -1;
     }
     printf("Discovery response parsing successful.\r\n");
 
     sync_response = run_http_sync(IOTCONNECT_CPID, IOTCONNECT_DUID);
     if (NULL == sync_response) {
         // Sync_call will print the error
-        return;
+        return -2;
     }
     printf("Sync response parsing successful.\r\n");
 

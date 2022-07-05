@@ -10,9 +10,9 @@
 #ifdef __cplusplus
 extern   "C" {
 #endif
-
-const char* get_username(void);
-const char* get_client_id(void);
+const char* iotc_sync_get_iothub_host();
+const char* iotc_sync_get_username(void);
+const char* iotc_sync_get_client_id(void);
 const char* iotc_sync_get_pub_topic(void);
 const char* iotc_sync_get_sub_topic(void);
 const char* iotc_sync_get_dtg(void);

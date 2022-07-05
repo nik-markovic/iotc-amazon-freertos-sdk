@@ -17,9 +17,10 @@ file(GLOB SdkSources src/*.c iotconnect-afr-layer/src/*.c)
 
 add_library(iotc-amazon-freertos-sdk STATIC ${cJSON} ${CLibSources} ${SdkSources})
 
+message(IOTC adding ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(iotc-amazon-freertos-sdk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/cJSON)
 target_include_directories(iotc-amazon-freertos-sdk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/iotc-c-lib/include)
-target_include_directories(iotc-amazon-freertos-sdk PUBLIC include)
+target_include_directories(iotc-amazon-freertos-sdk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(iotc-amazon-freertos-sdk)
 
