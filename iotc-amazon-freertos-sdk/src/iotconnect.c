@@ -35,19 +35,13 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-/* SHADOW API header. */
-#include "shadow.h"
-
-/* JSON library includes. */
-#include "core_json.h"
-
 /* shadow demo helpers header. */
 #include "mqtt_demo_helpers.h"
 
 /* Transport interface implementation include header for TLS. */
 #include "transport_secure_sockets.h"
 
-#include <transport_interface.h>
+#include "transport_interface.h"
 
 //
 // Copyright: Avnet, Softweb Inc. 2021
@@ -158,7 +152,7 @@ int iotconnect_sdk_send_packet(const char* data) {
 }
 
 void iotconnect_sdk_loop(unsigned int timeout_ms) {
-    return iotc_device_client_loop(timeout_ms);
+    iotc_device_client_loop(timeout_ms);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +191,7 @@ int iotconnect_sdk_init() {
 
     IotConnectDeviceClientConfig pc;
     pc.status_cb = config.status_cb;
+    pc.status_cb = config.status_cb;
     pc.c2d_msg_cb = on_mqtt_c2d_message;
 
     ret = iotc_device_client_init(&pc);
@@ -224,7 +219,8 @@ int RunIotconnectShadowDemo(bool awsIotMqttMode,
     iotc_sync_obtain_response();
     if (iotconnect_sdk_init()) {
         return EXIT_FAILURE;
-    }    
+    }
+    return EXIT_SUCCESS;
 }
 
 /*-----------------------------------------------------------*/

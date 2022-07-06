@@ -35,14 +35,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-/* SHADOW API header. */
-#include "shadow.h"
-
-/* JSON library includes. */
-#include "core_json.h"
-
 /* shadow demo helpers header. */
-#include "mqtt_demo_helpers.h"
+#include <mqtt_demo_helpers.h>
 
 /* Transport interface implementation include header for TLS. */
 #include "transport_secure_sockets.h"

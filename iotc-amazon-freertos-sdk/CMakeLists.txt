@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 
-project(iotc-amazon-freertos-c-sdk)
+project(iotc-amazon-freertos-sdk)
 
 #cJSON
 set(ENABLE_CJSON_TEST OFF CACHE BOOL "CJson - Build Tests")

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "iotconnect.h"
+#include "iotconnect_common.h"
 #include "app_config.h"
 
 #define APP_VERSION "00.01.00"
