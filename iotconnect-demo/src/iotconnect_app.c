@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "iot_network.h"
+
 #include "iotconnect.h"
 #include "iotconnect_common.h"
 #include "app_config.h"
@@ -142,4 +144,19 @@ int iotconnect_app_main(void) {
     }
 
     return 0;
+}
+
+int RunIotConnectDemo( bool awsIotMqttMode,
+                               const char * pIdentifier,
+                               void * pNetworkServerInfo,
+                               void * pNetworkCredentialInfo,
+                               const IotNetworkInterface_t * pNetworkInterface )
+{
+    ( void ) awsIotMqttMode;
+    ( void ) pIdentifier;
+    ( void ) pNetworkServerInfo;
+    ( void ) pNetworkCredentialInfo;
+    ( void ) pNetworkInterface;
+
+    return iotconnect_app_main();
 }
