@@ -1,4 +1,9 @@
-# iotc-amazon-freertos-sdk
+# About
+
+This repository contains the IoTConnect SDK for Amazon FreeRTOS.
+
+The SDK should support all boards supported by Amazon FreeRTOS, but it has been tested only with:
+- Windows PC Simulator (CMake and Visual Studio setup)
 
 ### Build Instructions
 
@@ -18,11 +23,11 @@ and replace *RunCoreMqttMutualAuthDemo* with *RunIotConnectDemo*:
     #endif
 ...
 ```  
-- Edit **demos/include/aws_credentials_keys.h** per your device's credentials. 
+- Edit **demos/include/aws_credential_keys.h** per your device's credentials. 
 Make sure to not use keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM - set it to NULL.
 If using a secure element, you may need to follow the AWS instructions, and understand 
 how to generate a certificate from a public key provided on the console during the first run.
-- Append to the list of includes in **demos/common/mqtt_demo_helpersmqtt_demo_helpers.c**:
+- Append to the list of includes in **demos/common/mqtt_demo_helpers/mqtt_demo_helpers.c**:
 ```c
 ...
 #include "iotconnect_sync.h"
@@ -52,7 +57,6 @@ how to generate a certificate from a public key provided on the console during t
              * metrics to AWS IoT. */
             xConnectInfo.pUserName = iotc_sync_get_username();
             xConnectInfo.userNameLength = (uint16_t)strlen(xConnectInfo.pUserName);
-
 ...
 ```
 - If not using CMake, ensure that all the files in libraries/iotc-amazon-freertos-sdk are 
@@ -61,7 +65,7 @@ added appropriately to your project as headers/sources.
 
 ### CMake Build Steps
 
-- You may wish to set BUILD_CLONE_SUBMODULES=OFF in the cmake build to speed it up.
+- You may wish to set BUILD_CLONE_SUBMODULES=OFF in your CMake build in order to speed speed up rebuilding.
 - Append this snippet to **libraries/3rdparty/CMakeLists.txt**:
 ```cmake
 ...
@@ -85,3 +89,4 @@ afr_module_dependencies(
 ...
 )
 ```
+- Build the the aws_demos target
