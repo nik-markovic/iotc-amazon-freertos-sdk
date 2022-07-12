@@ -136,8 +136,8 @@ int iotconnect_app_main(void) {
         for (int i = 0; iotconnect_sdk_is_connected() && i < 10; i++) {
             publish_telemetry();
             // repeat approximately evey ~5 seconds
-            for (int k = 0; k < 100; k++) {
-                iotconnect_sdk_loop(5000);
+            for (int k = 0; k < 5; k++) {
+                iotconnect_sdk_loop(1000);
             }
         }
         iotconnect_sdk_disconnect();

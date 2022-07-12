@@ -100,7 +100,8 @@ int iotc_device_client_disconnect() {
     if (ret == pdFAIL) {
         LogError(("Encountered a failure while trying to disconnect the MQTT session."));
     }
-    return (pdPASS ? EXIT_SUCCESS : EXIT_FAILURE);
+    is_connected = false;
+    return (ret == pdPASS ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 bool iotc_device_client_is_connected() {
@@ -120,7 +121,7 @@ int iotc_device_client_send_message(const char* message) {
     if (pdPASS != ret) {
         LogError(("Failed to send message. Connection status: %s", message, connected ? "CONNECTED" : "DISCONNECTED"));
     }
-    return (pdPASS ? EXIT_SUCCESS : EXIT_FAILURE);
+    return (ret == pdPASS ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 void iotc_device_client_loop(unsigned int timeout_ms) {
