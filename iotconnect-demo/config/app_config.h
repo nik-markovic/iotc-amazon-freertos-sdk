@@ -4,7 +4,7 @@
 
 #define IOTCONNECT_CPID "avtds"
 #define IOTCONNECT_ENV  "Avnet"
-#define IOTCONNECT_DUID "todemo03"
+#define IOTCONNECT_DUID "clickboard-01238D7B2A7E07C4EE"
 
 
 

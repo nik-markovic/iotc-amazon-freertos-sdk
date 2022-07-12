@@ -309,7 +309,7 @@ static BaseType_t prvClientRequest(const TransportInterface_t* ptransportInterfa
         response.bodyLen,
         (int32_t)response.bodyLen,
         response.pBody));
-    r->response = response.pBody;
+    r->response = (char *) response.pBody;
     r->response[response.bodyLen] = 0; // null terminate
     status = (response.statusCode == 200) ? pdPASS : pdFAIL;
 

@@ -53,9 +53,9 @@ struct NetworkContext
 };
 
 static bool is_connected = false;
-static NetworkContext_t xNetworkContext;
+static NetworkContext_t xNetworkContext = {0};
 static uint8_t ucSharedBuffer[1024];
-static MQTTContext_t xMqttContext;
+static MQTTContext_t xMqttContext = { 0 };
 static MQTTFixedBuffer_t xBuffer =
 {
     .pBuffer = ucSharedBuffer,
@@ -85,8 +85,9 @@ static void prvEventCallback(MQTTContext_t* pxMqttContext,
     if ((pxPacketInfo->type & 0xF0U) == MQTT_PACKET_TYPE_PUBLISH)
     {
         assert(pxDeserializedInfo->pPublishInfo != NULL);
-        LogInfo(("pPublishInfo->pTopicName:%s.", pxDeserializedInfo->pPublishInfo->pTopicName));
-        LogInfo(("---%s.---", pxDeserializedInfo->pPublishInfo->pPayload));
+        if(c2d_msg_cb) {
+            c2d_msg_cb((unsigned char*) pxDeserializedInfo->pPublishInfo->pPayload,  pxDeserializedInfo->pPublishInfo->payloadLength);
+        }
     }
     else
     {
@@ -163,13 +164,14 @@ int iotc_device_client_init(IotConnectDeviceClientConfig* c) {
     }
     LogInfo(("Connected to MQTT with EstablishMqttSession."));
 
-    if (pdPASS != (ret = SubscribeToTopic(&xMqttContext,
-        iotc_sync_get_sub_topic(),
-        (uint16_t)strlen(iotc_sync_get_sub_topic())
-    ))) {
+    ret = SubscribeToTopic(&xMqttContext,
+       iotc_sync_get_sub_topic(),
+       (uint16_t)strlen(iotc_sync_get_sub_topic())
+    );
+    if (pdPASS != ret) {
         LogError(("Failed to subscribe to topic %s", iotc_sync_get_sub_topic()));
     }
-    bool connected = (xMqttContext.connectStatus == MQTTConnected);
+    bool connected = false;
     int tries = 0;
     do {
         connected = (xMqttContext.connectStatus == MQTTConnected);
