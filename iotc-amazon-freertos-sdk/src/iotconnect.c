@@ -135,9 +135,11 @@ static void on_message_intercept(IotclEventData data, IotConnectEventType type) 
         printf("Got a SYNC request request. Closing the mqtt connection.\n");
         iotc_sync_free_response();
         iotconnect_sdk_disconnect();
+        break;
     case ON_CLOSE:
         printf("Got a disconnect request. Closing the mqtt connection.\n");
         iotconnect_sdk_disconnect();
+        break;
     default:
         break; // not handling nay other messages
     }

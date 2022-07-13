@@ -70,7 +70,8 @@ how to generate a certificate from a public key provided on the console during t
 ...
 ```
 - If not using CMake, ensure that all the files in libraries/iotc-amazon-freertos-sdk are 
-added appropriately to your project as headers/sources.
+added appropriately to your project as headers/sources. You can see the list of source directories 
+and files that need to be compile and include paths in the [CmakeLists.txt](CmakeLists.txt) file in this directory.
 - If using CMake, follow the steps in the CMake section below.   
 
 ### CMake Build Steps
