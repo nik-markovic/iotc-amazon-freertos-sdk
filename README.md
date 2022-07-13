@@ -4,12 +4,16 @@ This repository contains the IoTConnect SDK for Amazon FreeRTOS.
 
 The SDK should support all boards supported by Amazon FreeRTOS, but it has been tested only with:
 - Windows PC Simulator (CMake and Visual Studio setup)
+- Microchip ATECC608A Secure Element with Windows Simulator (CMake)
 
 ### Build Instructions
 
 - Clone the Amazon FreeRTOS repo.
-- Clone or download this repo into the libraries/3rdparty directory of the Amazon FreeRTOS repo.
-- Follow the instructions for your board to be able to run the demo. 
+- Clone this repo into the libraries/3rdparty directory of the Amazon FreeRTOS repo ensuring that submodules are pulled also:
+```shell script
+git clone https://github.com/aws/amazon-freertos.git --recurse-submodules
+```
+- Follow the Amazon FreeRTOS instructions for your board to be able to run the demo. 
 For example, if running the PC simulator, you will need to set configNETWORK_INTERFACE_TO_USE in vendors/pc/boards/FreeRTOSConfig.h, etc.
 - Edit **demos/include/iot_demo_runner.h** 
 and replace *RunCoreMqttMutualAuthDemo* with *RunIotConnectDemo*:
@@ -23,6 +27,12 @@ and replace *RunCoreMqttMutualAuthDemo* with *RunIotConnectDemo*:
     #endif
 ...
 ```  
+- Edit **demos/include/aws_credential.h** and specify any value for clientcredentialIOT_THING_NAME. This value is used in some setups as the DHCP host name, but it is not tied to the device name for the IoTConnection.
+```c
+#ifndef clientcredentialIOT_THING_NAME
+    #define clientcredentialIOT_THING_NAME    "foo"
+#endif
+```
 - Edit **demos/include/aws_credential_keys.h** per your device's credentials. 
 Make sure to not use keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM - set it to NULL.
 If using a secure element, you may need to follow the AWS instructions, and understand 
