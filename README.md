@@ -14,7 +14,8 @@ The SDK should support all boards supported by Amazon FreeRTOS, but it has been 
 git clone https://github.com/aws/amazon-freertos.git --recurse-submodules
 ```
 - Follow the Amazon FreeRTOS instructions for your board to be able to run the demo. 
-For example, if running the PC simulator, you will need to set configNETWORK_INTERFACE_TO_USE in vendors/pc/boards/FreeRTOSConfig.h, etc.
+For example, if running the PC simulator, you will need to set configNETWORK_INTERFACE_TO_USE in vendors/pc/boards/FreeRTOSConfig.h, 
+or if using WiFi on the device, ensure to set the SSID and password in aws_clientcredential.h 
 - Edit **demos/include/iot_demo_runner.h** 
 and replace *RunCoreMqttMutualAuthDemo* with *RunIotConnectDemo*:
 ```c
@@ -27,7 +28,8 @@ and replace *RunCoreMqttMutualAuthDemo* with *RunIotConnectDemo*:
     #endif
 ...
 ```  
-- Edit **demos/include/aws_credential.h** and specify any value for clientcredentialIOT_THING_NAME. This value is used in some setups as the DHCP host name, but it is not tied to the device name for the IoTConnection.
+- Edit **demos/include/aws_credential.h** and specify any value for clientcredentialIOT_THING_NAME. 
+This value is used in some setups as the DHCP host name, but it is not tied to the device name for the IoTConnection.
 ```c
 #ifndef clientcredentialIOT_THING_NAME
     #define clientcredentialIOT_THING_NAME    "foo"
